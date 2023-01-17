@@ -1,9 +1,9 @@
 # COS PRO Java 1급 - 모의고사3
 
-### 3차) 문제1 -
+### 3차) 문제1 - 배열을 회전시켜보세요.
 ```Java
 class Main {
-		// 3. arrA 배열을 두 번 이어 붙여 길이가 2배인 배열로 만든다.
+    // 3. arrA 배열을 두 번 이어 붙여 길이가 2배인 배열로 만든다.
     int[] func_a(int[] arr) {
         int length = arr.length;
         int[] ret = new int[length*2];
@@ -65,7 +65,7 @@ class Main {
 }
 ```
 
-### 3차) 문제2 - 팰린드롬 문제 - JAVA
+### 3차) 문제2 - 팰린드롬 문제
 ```Java
 import java.util.*;
 
@@ -194,9 +194,45 @@ class Main {
 
 ```
 
-### 3차) 문제9 -
+### 3차) 문제9 - 팝업 스토어를 열 최적의 날짜
 ```Java
+class Main {
+    public int solution(int[] revenue, int k) {
+        int answer = 0;
+        int n = revenue.length;
+        int sum = 0;
+	// 1. 처음부터 k번째까지 합을 구한다.
+        for (int i = 0; i < k; i++) {
+            sum += revenue[i];
+        }
+        answer = sum;
+	// 2. 다음 윈도우의 시작점인 1번주터 돌면서 다음을 반복한다.
+        for (int i = k; i < n; i++) {
+	    // 2-1. (이전 합계 - 이전 윈도우의 맨 앞의 값 + 새로운 윈도우에 포함된 값)을 이용해
+	    //현재 윈도우의 합계를 구한다.
+            sum = sum - revenue[i - k] + revenue[i];
+	    // 2-2. 합계 중 큰 값을 찾는다.
+            if (answer < sum)
+                answer = sum;
+        }
+        return answer;
+    }
+    
+    public static void main(String[] args) {
+        Main sol = new Main();
+        int[] revenue1 = {1, 1, 9, 3, 7, 6, 5, 10};
+        int k1 = 4;
+        int ret1 = sol.solution(revenue1, k1);
 
+        System.out.println("solution 메소드의 반환 값은 " + ret1 + " 입니다.");
+
+        int[] revenue2 = {1, 1, 5, 1, 1};
+        int k2 = 1;
+        int ret2 = sol.solution(revenue2, k2);
+
+        System.out.println("solution 메소드의 반환 값은 " + ret2 + " 입니다.");        
+    }
+}
 ```
 
 ### 3차) 문제10 -
