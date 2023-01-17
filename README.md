@@ -65,9 +65,75 @@ class Main {
 }
 ```
 
-### 3차) 문제2 -
+### 3차) 문제2 - 팰린드롬 문제 - JAVA
 ```Java
+import java.util.*;
 
+public class Main {
+    public boolean func_a(ArrayList<String> list, String s) {
+		for (int i = 0; i < list.size(); i++)
+			if (s.equals(list.get(i)))
+				return true;
+		return false;
+	}
+
+    public boolean func_b(String s) {
+		int length = s.length();
+		for (int i = 0; i < length / 2; i++)
+			if (s.charAt(i) != s.charAt(length - i - 1))
+				return false;
+		return true;
+	}
+    
+    public String func_c(ArrayList<String> palindromes, int k) {
+        Collections.sort(palindromes);
+        if (palindromes.size() < k)
+        	return "\"NULL\"";
+        else
+        	return palindromes.get(k-1);
+    }
+
+    public String solution(String s, int k) {
+	//1. 팰린드롬 문자열을 저장할 palindromes를 선언
+        ArrayList<String> palindromes = new ArrayList<String>();
+	//받은 팰린드롬 문자열의 길이를 구한다.
+        int length = s.length();
+	//2. 주어진 문자열의 모든 부분 문자열을 찾아 다음을 수행
+	// subStr : 부분 문자열, palindromes : 부분 문자열 중 팰린드롬
+        for (int startIdx = 0; startIdx < length; startIdx++) {
+            for (int cnt = 1; cnt < length - startIdx + 1; cnt++) {
+                String subStr = s.substring(startIdx, startIdx + cnt);
+		// 3. 부분 문자열이 팰린드롬 문자열인지 확인하고(func_b),
+		// 팰린드롬 문자열이라면 배열 palindromes에 
+		// 같은 문자열이 이미 들어 있는지 확인 (func_a)
+                if (func_b(subStr)) {
+                	if (func_a(palindromes, subStr) == false)
+				// 배열 palindromes에 같은 문자열이 없으면, 현재 팰린드롬 문자열을 추가
+                		palindromes.add(subStr);
+                }
+            }
+        }
+	// 4. palindromes를 정렬, 배열 길이가 k보다 작다면 "NULL"리턴, 
+	// 그렇지 않으면 리스트의 k-1번째 원소를 리턴
+        String answer = func_c(palindromes, k);
+        return answer;
+    }
+    // 아래는 테스트케이스 출력을 해보기 위한 main 메소드입니다.
+    public static void main(String[] args) {
+    	Main sol = new Main();
+        String s1 = new String("abcba");
+        int k1 = 4;
+        String ret1 = sol.solution(s1, k1);
+        
+        System.out.println("solution 메소드의 반환 값은 \"" + ret1 + "\" 입니다.");
+        
+        String s2 = new String("ccddcc");
+        int k2 = 7;
+        String ret2 = sol.solution(s2, k2);
+        
+        System.out.println("solution 메소드의 반환 값은 " + ret2 + " 입니다.");
+    }
+}
 ```
 
 ### 3차) 문제 -
